@@ -1,3 +1,53 @@
+/*
+1. addLab(string lab_name)
+The purpose of the command: Adding new lab category in the database.
+How to use: User inputs the lab name. The system will create the lab category in the database.
+2. removeLab(string lab_name)
+The purpose of the command: Removing existed lab category in the database.
+How to use: User inputs the lab name. The system will remove the lab category from the system if it has existed.
+3. searchLab()
+The purpose of the command: Showing all the lab name in the database.
+How to use: User inputs the command. The system will output all the information of the lab category in the database.
+4. searchLabClassification(string lab_name)
+The purpose of the command: Showing all the supply classification in the lab category.
+How to use: User inputs the lab name. The system will output all the supply classifications in the lab category.
+5. searchAllLabClassification()
+The purpose of the command: Showing all the supply classification in every lab category.
+How to use: User inputs the command. The system will output all the supply classifications in every lab category.
+6. addSupplyClassification(string supply_name, string lab_name, int initial_amount)
+The purpose of the command: Adding new supply classification in the lab category.
+How to use: User inputs the supply name, initial amount, and the lab name. The system will create the supply classification with the initial amount in the lab category.
+7. removeSupplyClassification(string supply_name, string lab_name)
+The purpose of the command: Removing existed supply classification in the lab category.
+How to use: User inputs the supply name and the lab name. The system will remove the supply classification in the lab category if it has existed.
+8. searchSupplyClassification()
+The purpose of the command: Showing all the supply classifications in the database.
+How to use: User inputs the command. The system will output all the supply classifications with their total amounts.
+9. addSupply(string supply_name, string lab_name, int amount)
+The purpose of the command: Adding supply amount to the existed supply classification in the lab category.
+How to use: User inputs the supply name, amount and the lab name. The system will add the amount to the supply classification in the lab category.
+10. removeSupply(string supply_name, string lab_name, int amount)
+The purpose of the command: Removing supply amount from the existed supply classification in the lab category.
+How to use: User inputs the supply name, amount and the lab name. The system will remove the amount from the supply classification in the lab category.
+11. searchAllSupply()
+The purpose of the command: Showing all the supplies in the database.
+How to use: User inputs the command. The system will output all the supply classifications with their total amounts across every supply type.
+12. searchSupply(string supply_name)
+The purpose of the command: Showing the information of a supply classification in the database.
+How to use: User inputs the supply name. The system will output all the labs that carry this supply with their respective amounts.
+13. searchUnclassifiedData()
+The purpose of the command: Showing all the unclassified data in the database.
+How to use: User inputs the command. The system will output all the unclassified data in the database.
+14. deleteUnclassifiedData()
+The purpose of the command: Deleting all the unclassified data in the database.
+How to use: User inputs the command. The system will delete all the unclassified data in the database.
+15. classifyData(string supply_name, string lab_name)
+The purpose of the command: Classifying the unclassified data into the supply classification in the lab category.
+How to use: User inputs the supply name and the lab name. The system will classify all unclassified data of the supply into the supply classification in the lab category.
+16. End the system()
+The purpose of the command: Closing the system and the database.
+How to use: User inputs the command. The system and the database will shut down.
+*/ 
 #include<bits/stdc++.h>
 using namespace std;
 #define rep(i,n) for(int i=0;i<n;i++) //rep(i,n); is a shorthand for->for(int i=0; i<n; i++);
@@ -212,7 +262,7 @@ int main(){
             if(temp==-1) cout<<lab_name<<" not found"<<endl;
             else lab->child(temp)->output();
         }
-        else if(key==55296777||key==5){ lab->outputAll(); }
+        else if(key==55296777||key==5) lab->outputAll(); 
         else if(key==-587722545||key==6){
             string supply_name, lab_name;
             int initial_amount;
@@ -228,7 +278,7 @@ int main(){
             getline(cin,lab_name);
             supply->removeClassification(lab,lab_name,supply_name);
         }
-        else if(key==782253932||key==8){ supply->output(); }
+        else if(key==782253932||key==8) supply->output(); 
         else if(key==886673697||key==9){
             string supply_name, lab_name;
             int amount;
@@ -255,8 +305,8 @@ int main(){
             if(index==-1) cout<<"empty"<<endl;
             else supply->child(index)->output();
         }
-        else if(key==817700224||key==45){ rep(i,unclassified_data.size()) cout<<unclassified_data[i].first<<" "<<unclassified_data[i].second<<endl; }
-        else if(key==526279509||key==46){ unclassified_data.clear(); }
+        else if(key==817700224||key==45) rep(i,unclassified_data.size()) cout<<unclassified_data[i].first<<" "<<unclassified_data[i].second<<endl; 
+        else if(key==526279509||key==46) unclassified_data.clear(); 
         else if(key==-707914532||key==47){
             string supply_name,lab_name;
             getline(cin,supply_name);
@@ -265,7 +315,7 @@ int main(){
             int amount=cal(supply_name);
             supply->mutateClassification(lab,lab_name,supply_name,amount);
         }
-        else if(key==-207516983||key==8) return 0;
+        else if(key==-207516983||key==48) return 0;
         else cout<<"Error! command doesn't exist"<<endl;
     }
 }
