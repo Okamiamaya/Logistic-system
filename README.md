@@ -8,7 +8,7 @@ Hello, I'm Okamiamaya. I often build robots on weekends, and while working on th
 
 To address this, I built **Logistic System** — a tool to manage laboratory inventory the way a logistics system manages shipments: items are stored in structured, trackable locations rather than scattered arbitrarily.
 
-This is a student project. While I have some background in competitive programming, I had no prior experience building a full system before starting this. Through studying for **AP Computer Science Principles (AP CSP)** and **AP Computer Science A (AP CSA)**, I developed a stronger foundation in robustness, UI/UX design, and object-oriented concepts, which I applied while building the second version. For the third version, my focus shifted to improving algorithmic efficiency and further refining the user experience.
+This is a student project. While I have some background in competitive programming, I had no prior experience building a full system before starting this. Through studying for **AP Computer Science Principles (AP CSP)** and **AP Computer Science A (AP CSA)**, I developed a stronger foundation in robustness, UI/UX design, and object-oriented concepts, which I applied while building the second version. For the third version, my focus shifted to improving algorithmic efficiency and further refining the user experience. The fourth version keeps that same behavior but explores three different ways of resolving a typed command internally, as a study in command-dispatch design.
 
 ## Features
 
@@ -19,6 +19,18 @@ This is a student project. While I have some background in competitive programmi
 - Input validation with clear success/failure feedback on every command
 - Dual command entry: type either a command's name or its numeric shortcut
 
+## Versions in this repo
+
+V4 ships as three separate, functionally identical programs. Each accepts the same commands and produces the same output — they differ only in *how* a typed command is resolved internally, which makes them useful as a side-by-side comparison of dispatch strategies.
+
+| File | Dispatch mechanism | How it decides which command ran |
+|---|---|---|
+| `Logistic_System_V4_1.cpp` | Rolling hash + `if`/`else if` chain | Hashes the input, then compares the hash against a chain of literal constants directly in `main()` |
+| `Logistic_System_V4_2.cpp` | Rolling hash + dispatch table | Hashes the input, then looks the hash up in an `unordered_map<hash, function<void()>>` and calls the matching handler in O(1) average time |
+| `Logistic_System_V4_3.cpp` | Rolling hash + enum/`switch` | Hashes the input, maps that hash to a `Command` enum value via `resolveCommand()`, then dispatches through a compiler-checked `switch` |
+
+Pick whichever one you want to build/run — any one of them is a complete program on its own.
+
 ## Getting Started
 
 ### Requirements
@@ -27,14 +39,20 @@ This is a student project. While I have some background in competitive programmi
 
 ### Build
 
+Build whichever variant you want to try:
+
 ```bash
-g++ -O2 -o logistic_system Logistic_System_V3.cpp
+g++ -O2 -std=c++17 -o logistic_system_hash            Logistic_System_V4_1.cpp
+g++ -O2 -std=c++17 -o logistic_system_dispatch_table   Logistic_System_V4_2.cpp
+g++ -O2 -std=c++17 -o logistic_system_enum             Logistic_System_V4_3.cpp
 ```
 
 ### Run
 
 ```bash
-./logistic_system
+./logistic_system_hash
+# or ./logistic_system_dispatch_table
+# or ./logistic_system_enum
 ```
 
 The system starts by printing the full list of available commands. Type `Help` (or `13`) at any time to see it again.
@@ -78,15 +96,17 @@ Chemistry Lab
 
 ## Design Notes
 
-- Commands are matched using a lightweight rolling hash rather than string comparison, so both full command names and numeric shortcuts resolve to the same action.
+- Commands are matched using a lightweight rolling hash rather than string comparison, so both full command names and numeric shortcuts resolve to the same action. All three V4 variants share this same hashing step; they only differ in the lookup/branching structure applied to the resulting hash (see [Versions in this repo](#versions-in-this-repo)).
 - Supplies added to a lab that doesn't yet exist are automatically routed to unclassified data instead of being rejected or lost, keeping the workflow forgiving for quick, out-of-order data entry.
 - All operations report a clear success or failure message, so the state of the system is never ambiguous after a command runs.
+- Each command's logic lives in its own clearly named, documented function (or block), and identifiers throughout favor readability (`labDatabase`, `supplyTotals`, `unclassifiedSupplies`) over terse single-letter names.
 
 ## Version History
 
 - **V1** — Initial working prototype
 - **V2** — Introduced structured commands and object-based organization
 - **V3** — Focused on efficiency improvements and UX polish: input validation, consistent feedback messaging, and safer lookup patterns
+- **V4** — Same behavior as V3, split into three parallel implementations comparing command-dispatch strategies (rolling hash + `if`/`else if`, hash-table lookup, and enum + `switch`); readable identifiers and purpose comments added throughout
 
 ## Author
 
