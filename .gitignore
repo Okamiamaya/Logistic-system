@@ -1,0 +1,52 @@
+# Compiled binaries
+logistic_system
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Compiled dynamic/static libraries
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+
+# Debug/build directories
+build/
+bin/
+Debug/
+Release/
+x64/
+x86/
+
+# CMake artifacts (in case you use CMake later)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Editor / IDE files
+.vscode/
+.vs/
+*.swp
+*.swo
+.idea/
+*.iml
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Core dumps
+core
+*.core
